@@ -1,0 +1,8 @@
+<h1> <%= t(:'Intro') %></h1>
+<%= form_tag("/main/view.json", :method => "get", remote: true, id: 'main_form') do %>
+  <%= label_tag(t(:'Our statistics ->')) %>
+  <%= submit_tag(t(:'Find out!'), class: "btn btn-outline-dark btn-sm") %>
+  <table id="result" class="table table-borderless table-striped" >
+
+  </table>
+<% end %>

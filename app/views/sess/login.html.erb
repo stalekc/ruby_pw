@@ -1,0 +1,18 @@
+<div class="row">
+  <div class="col-4"></div>
+<div class="col-4">
+<%= form_tag("/sess/middle", :method => "get") do %>
+    <%= label_tag("Логин:") %>
+    <%= text_field_tag(:login, '', class: "form-control form-control-sm") %>
+    <%= label_tag("Пароль:") %>
+    <%= password_field_tag(:password, '', class: "form-control form-control-sm") %>
+    <p></p>
+    <%= submit_tag("Войти", class: "btn btn-sm btn-primary btn-block btn-light") %>
+  <% end %>
+  <p></p>
+  <%= form_tag("/users/new", :method => "get") do %>
+    <%= submit_tag("Зарегистрироваться", class: "btn btn-sm btn-primary btn-block btn-light") %>
+  <% end %>
+</div>
+<div class="col-4"></div>
+</div>

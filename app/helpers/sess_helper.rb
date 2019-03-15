@@ -1,0 +1,2 @@
+module SessHelper
+end

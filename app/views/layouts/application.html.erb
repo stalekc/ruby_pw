@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>HT2</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+  <header>
+    <nav class="navbar" style="background-color: black">
+      <a class="navbar-brand text-white" href="/"><%= t(:'Home') %></a>
+      <%= form_tag("/lang/change", :method => "get") do %>
+        <%= hidden_field_tag(:l, :ru) %>
+        <%= submit_tag('RU', class: "btn btn-sm btn-light") %>
+      <%end %>
+      <%= form_tag("/lang/change", :method => "get") do %>
+        <%= hidden_field_tag(:l, :en) %>
+        <%= submit_tag('ENG', class: "btn btn-sm btn-light") %>
+      <%end %>
+      <% if current_user %>
+        <div>
+          <a class="text-white"> <%= label_tag(current_user.login) %> </a>
+          <a class="btn btn-sm btn-light" href= <%="/users/" + current_user.id.to_s + '/edit'%>><%= t(:'Edit') %></a>
+          <a class="btn btn-sm btn-light" href="/sess/out"><%= t(:'Logout') %></a>
+        </div>
+      <% end %>
+      <% unless current_user %>
+        <a class="btn btn-sm btn-light" href="/sess/login"><%= t(:'Login') %></a>
+      <% end %>
+    </nav>
+  </header>
+  <main class="container" role="main" style="margin-top: 2em">
+    <div>
+      <div class="row">
+        <div class="col-2 bd-sidebar" style="">
+          <table class="table table-borderless">
+            <thead><tr><th><%= t(:'Forums list') %></th></tr></thead>
+            <tbody>
+              <% Forum.find_by_sql("select * from forums").each do |a| %>
+                <tr><td><%= link_to a[:name], forum_path(a[:id]) %></td></tr>
+              <% end %>
+            </tbody>
+          </table>
+          <% if current_user %>
+            <a class="btn btn-sm btn-outline-dark" href="/forums/new"><%= t(:'Create forum') %></a>
+          <% end %>
+        </div>
+        <div class="col-8">
+          <%= yield %>
+        </div>
+        <div class="col-2">
+          Здесь могла быть <br/> ваша реклама <br/> +79637210282
+        </div>
+      </div>
+    </div>
+  </main>
+  </body>
+</html>

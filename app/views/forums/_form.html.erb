@@ -1,0 +1,23 @@
+<div class="row">
+  <div class="col-2"></div>
+  <div class="col-8">
+    <%= form_with(model: forum, local: true) do |form| %>
+      <% if @problem %>
+        <div id="error_explanation">
+          <p> <%= t(:'Name can`t be empty') %> </p>
+        </div>
+      <% end %>
+
+      <div class="field">
+        <%= form.label :Название %>
+        <%= form.text_field :name, id: :forum_name, class: "form-control form-control-sm"%>
+      </div>
+      <p></p>
+      <div class="actions">
+        <%= form.submit value: t(:'Create forum'), class: "btn btn-sm btn-primary btn-block btn-light" %>
+      </div>
+    <% end %>
+  </div>
+  <div class="col-2"></div>
+</div>
+

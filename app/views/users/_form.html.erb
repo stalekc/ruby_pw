@@ -1,0 +1,33 @@
+<div class="row">
+  <div class="col-4"></div>
+  <div class="col-4">
+<%= form_with(model: user, local: true) do |form| %>
+  <% if @problem %>
+    <div id="error_explanation">
+      <p> Нельзя создать пользователя</p>
+    </div>
+  <% else %>
+    <% if user.errors.any? %>
+     <div id="error_explanation">
+       <p> Данный логин уже занят</p>
+     </div>
+    <%end %>
+  <%end %>
+
+  <div class="field">
+    <%= form.label t(:'Login') %>
+    <%= form.text_field :login, id: :user_login, class: "form-control form-control-sm"%>
+  </div>
+
+  <div class="field">
+    <%= form.label t(:'Password') %>
+    <%= form.text_field :password, id: :user_password, class: "form-control form-control-sm"%>
+  </div>
+  <p></p>
+  <div class="actions">
+    <%= form.submit value: t(:'Create user'),class: "btn btn-sm btn-primary btn-block btn-light" %>
+  </div>
+<% end %>
+  </div>
+  <div class="col-4"></div>
+</div>

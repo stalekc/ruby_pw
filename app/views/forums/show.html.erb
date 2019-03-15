@@ -1,0 +1,71 @@
+<h1 class="align-content-center"><%= @forum.name %></h1>
+<% if @str then str = @str else (str = 1; @str = 1) end %>
+<table class="table table-borderless">
+  <tbody>
+  <% if @answer.length != 0 %>
+    <% n = [@str * 10, @answer.length].min %>
+    <% ((@str - 1) * 10).upto(n - 1) do |i| %>
+      <% a = @answer[-n+i - (@str - 1) * 10] %>
+      <% if current_user && a.user_id == current_user.id%>
+        <tr>
+          <td><%= (a[:created_at] + 60*60*3).to_s[11..18] %></td>
+          <td><%= a[:text] %></td>
+          <td><%= current_user.login %></td>
+        </tr>
+      <% end %>
+      <% if (not current_user) or a.user_id != current_user.id%>
+        <tr>
+          <td><%= User.find_by_id(a[:user_id]).login %></td>
+          <td><%= a[:text] %></td>
+          <td><%= a[:created_at].to_s[11..18] %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  <%end %>
+  <% if @answer.length == 0 %>
+    <div class="row">
+    <div class="col-4"></div>
+    <div class="col-4">
+    <p> <%= t(:'Nothing here') %></p>
+    </div>
+    <div class="col-4"></div>
+  </div>
+  <%end %>
+  </tbody>
+</table>
+<div class="row">
+  <div class="col-2">
+    <% if str > 1 %>
+      <%= form_tag("/forums/" + @forum.id.to_s, :method => "get") do %>
+        <%= hidden_field_tag(:str, str - 1) %>
+        <%= submit_tag(str - 1, class: "btn btn-sm btn-outline-dark") %>
+      <%end %>
+    <% end %>
+  </div>
+  <div class="col-8">
+    <% if current_user %>
+      <%= form_tag("/forums/" + @forum.id.to_s, :method => "get") do %>
+        <div class="row">
+          <div class="col-8">
+            <%= text_field_tag(:mes, "", class: "form-control form-control-sm") %>
+          </div>
+          <div class="col-2">
+            <%= submit_tag("Отправить", class: "btn btn-sm btn-outline-dark") %>
+          </div>
+        </div>
+      <%end %>
+    <% end %>
+    <% unless current_user%>
+      <p class="align-content-center"><%= t(:'Login to send a message') %></p>
+    <%end %>
+  </div>
+  <div class="col-2">
+    <% if (@str) * 10 <= @answer.length %>
+      <%= form_tag("/forums/" + @forum.id.to_s, :method => "get") do %>
+        <%= hidden_field_tag(:str, str + 1) %>
+        <%= submit_tag(@str + 1, class: "btn btn-sm btn-outline-dark") %>
+      <%end %>
+    <% end %>
+  </div>
+</div>
+

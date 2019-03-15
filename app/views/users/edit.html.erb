@@ -1,0 +1,6 @@
+<% if current_user and current_user.login == @user.login %>
+  <%= render 'form', user: @user %>
+<% end %>
+
+
+

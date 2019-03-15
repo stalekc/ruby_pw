@@ -1,0 +1,22 @@
+<p id="notice"><%= notice %></p>
+<% if current_user and current_user.login == @user.login %>
+<div class="row">
+  <div class="col-4"></div>
+  <div class="col-4">
+    <p id="notice"><%= notice %></p>
+
+    <p>
+      <strong>Логин:</strong>
+      <%= @user.login %>
+    </p>
+
+    <p>
+      <strong>Пароль:</strong>
+      <%= @user.password %>
+    </p>
+
+    <%= link_to 'Edit', edit_user_path(@user) %>
+  </div>
+  <div class="col-4"></div>
+</div>
+<% end %>
